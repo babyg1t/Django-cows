@@ -1,0 +1,56 @@
+{% extends 'home.html' %}
+{%block content %}
+<div class="col-md-6 offset-md-3">   
+    
+    
+    <form class="form-floating" method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <br>
+        <div class="form-floating mb-3">
+            
+            <input required type="text" class="form-control" id="floatingInputValue1" placeholder="Code" name="code" value="{{animal_record.code}}">
+            <label for="floatingInputValue1">Code:</label>
+        </div>
+        <br>
+        
+        <div class="form-floating mb-3">
+            
+            <input required type="text" class="form-control" id="floatingInputValue2" placeholder="Number" name="number" value="{{animal_record.number}}">
+            <label for="floatingInputValue2">Number:</label>
+        </div>
+        <br>
+        <div class="form-floating mb-3"> 
+            
+            <input required type="text" class="form-control" id="floatingInputValue3" placeholder="Date" name="date" value="{{animal_record.date.year}}-{{animal_record.date.month}}-{{animal_record.date.day}}">
+            <label for="floatingInputValue3">Date:</label>
+        </div>
+        
+        <br>
+        
+        <div class="form-floating mb-3"> 
+            
+            
+            <select class="form-select form-select-lg " aria-label="Large select example" id="floatingInputValue4" name="gender" value="{{animal_record.gender}}">
+                <option selected>{{animal_record.gender}}</option>
+                {% if animal_record.gender == 'Female' or animal_record.gender == 'F' %}
+                <option>Male</option>
+                {% else %}
+                <option>Female</option>
+                {% endif %}
+                <label for="floatingInputValue4">Gender:</label>
+            </select>
+        </div>
+        <br>
+        <div class="form-floating mb-3">
+        
+            <input  type="file" class="form-control" id="floatingInputValue0" placeholder="Insert image.." name="image" value="{{animal_record.image}}">
+            
+            </div>
+            
+        <button type="submit" class="btn btn-outline-primary"  href="{% url 'update' animal_record.pk %}">Save</button>
+        <a href="{% url 'viewrecord' animal_record.pk %}" class="btn btn-outline-danger">Cancel</a>
+        </form>
+        
+    </div>
+
+   {% endblock %}

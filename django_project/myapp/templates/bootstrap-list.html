@@ -1,0 +1,28 @@
+{% extends 'home.html' %}
+{% block content %}
+<div>
+<table class="table table-striped">
+    <thead>
+      <tr class="table-secondary">
+        <th scope="col">Code</th>
+        <th scope="col">Birth date</th>
+        <th scope="col">Gender</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+      
+      <tr class="clickable-row">
+        
+        <a href="{% url 'viewrecord' record.pk %}"><td>{{record.code}}</a></td>
+        <td>{{record.date}}</td>
+        <td>{{record.gender}}</td>
+      </tr>
+    
+    
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  {% endblock %}

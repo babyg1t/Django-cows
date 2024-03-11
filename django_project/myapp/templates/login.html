@@ -1,0 +1,63 @@
+{%extends 'base.html'%}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </head>
+<body>
+
+{% block content %}
+<div class="col-md-6 offset-md-3">
+  <h1>LOG IN</h1>
+  <br/>
+  
+  <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+  
+    <div class="mb-3">
+      <input type="text" class="form-control" name="email", placeholder="Email" required>
+      
+    </div><br/>
+    <div class="mb-3">
+      <input type="password" class="form-control" name="password", placeholder="Password" required>
+    </div>
+    <p>Not signed up yet?&nbsp;&nbsp;<a href="{% url 'register' %}">Sign up</a></p>
+    
+    <button  type="submit" class="btn btn-outline-secondary">Login</button>
+
+  
+  </form>
+  
+  <!-- Maybe can be used for "Remember me" checkbox option -->
+  <!-- <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div> -->
+<!-- <form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+      
+      <input type="text" class="form-control" name="username" placeholder="Username" required>
+      
+    </div>
+    <div class="mb-3">
+     
+      <input type="password" class="form-control" name="password" placeholder="Password" required>
+    </div>
+    
+    
+    <button type="submit" class="btn btn-secondary"  >Log In</button>
+    
+  </form> -->
+
+
+{% endblock %}
+
+</body>
+</html>
