@@ -12,12 +12,12 @@ Move to folder in which the project will be contained
 ~virtualenv env
 
 source ./env/bin/activate
-
+```
 ~pip install django
 ~pip install Pillow
 ~python -m pip install django_tables2
 ~pip install djangorestframework
-
+```
 STEP 2:
 
 git clone https://github.com/babyg1t/Django-cows
