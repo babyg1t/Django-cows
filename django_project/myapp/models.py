@@ -28,17 +28,20 @@ class animal(models.Model):
         ('F', 'Female'),
     )
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES,null=False,default='F')
-
+    parent = models.CharField(max_length=100,null=True)
+    
+    
     def get_absolute_url(self):
         return reverse("viewrecord", args=[self.pk])
     
    
 
-# class cub(models.Model):
-    
-#     parent = models.ForeignKey(animal, on_delete=models.SET_NULL)
-#     code = models.CharField(max_length=50, null=True)
-#     number = models.CharField(max_length=50, null=True)
-#     gender = models.CharField(max_length=50, null=True, default='')
+# class deceased(models.Model):
+#     user = models.ForeignKey(User,on_delete=models.CASCADE)
+#     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+#     code = models.CharField(max_length=50,null=True)
+#     number = models.CharField(max_length=50,null=True,)
+#     date = models.DateField(null=True)
+#     died = models.DateField(null=True,auto_now)
 #     image = models.ImageField(null=True, default='default.jpg')
 #     pass

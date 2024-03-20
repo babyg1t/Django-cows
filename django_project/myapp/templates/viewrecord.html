@@ -28,18 +28,19 @@
       color: white;
       
     }
-  </style>
+  </style> 
   </head>
   <body> -->
     <style>
-      #button:hover{
-        background-color: red;
-
+      
+      #cubs{
+        text-decoration: none;
       }
+     
     </style>
     {% block content %}
     <div class="col-md-6 offset-md-2">
-    <div class="card" style="width: 50rem; height: auto;">
+    <div class="card" style="width: 55rem; height: auto;">
        
         <a href=" {% url 'home' %}"><input type="image" src="{{animal_record.image.url}}" class="card-img-top" alt="My image"></a>
         
@@ -49,7 +50,9 @@
         </div> -->
         
         <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Parent: </strong> {{animal_record.parent}}</li>
           
+
           <li class="list-group-item"><strong>Code: </strong> {{animal_record.code}}</li>
 
           <li class="list-group-item"><strong>Number: </strong> {{animal_record.number}}</li>
@@ -58,6 +61,16 @@
           <li class="list-group-item"><strong>Birth Date: </strong> {{animal_record.date}}</li>
           
           <li class="list-group-item"><strong>Gender: </strong>{{animal_record.gender}}</li>
+          {% if cubs %}
+          <li class="list-group-item" id="cubs"><strong>Cubs: </strong>
+          {% for cub in cubs %}
+            <a href="{% url 'viewrecord' cub.pk %}" style="text-decoration: none;">{{cub.code}}{{cub.number}}</a>&nbsp;|
+          {% endfor %}
+          </li>
+          {% endif %}
+        
+
+
             
 
         </ul>

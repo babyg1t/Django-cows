@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django_tables2 import RequestConfig
 import os
+from django.http import Http404
 
 # Create your views here.
 
@@ -20,6 +21,7 @@ def add_record(request):
         
         
         animal_code = request.POST.get('code')
+        animal_parent = request.POST.get('parent')
         animal_date = request.POST.get('date')
         animal_gender = request.POST.get('gender')
         animal_number = request.POST.get('number')
@@ -35,7 +37,8 @@ def add_record(request):
                 date = animal_date,
                 gender = animal_gender,
                 number = animal_number,
-                image = animal_image
+                image = animal_image,
+                parent = animal_parent
             )
             messages.success(request,"Record added!")
             return redirect('add')
@@ -46,7 +49,8 @@ def add_record(request):
                 date = animal_date,
                 gender = animal_gender,
                 number = animal_number,
-                image = 'default.jpg'
+                image = 'default.jpg',
+                parent = animal_parent
             )
             messages.success(request,"Record added!")
             return redirect('add')
@@ -59,26 +63,27 @@ def update_record(request,pk):
     record = animal.objects.get(id=pk)
 
     old_image = record.image
-    print(os.listdir(settings.MEDIA_ROOT))
+    
     if request.method == 'POST':
         
         record.code = request.POST.get('code')
         record.number = request.POST.get('number')
         record.date = request.POST.get('date')
         record.gender = request.POST.get('gender')
-        record.image = request.FILES.get('image')
-        
+        if request.FILES.get('image') is not None:
+            record.image = request.FILES.get('image') 
+        record.parent = request.POST.get('parent')
         record.save()
 
         if str(record.image) != str(old_image) and old_image != 'default.jpg':
-             print(str(record.image) + '  ' + str(old_image))
+             
              file_path = os.path.join(settings.MEDIA_ROOT,str(old_image))
-             print(file_path)
+             
              if os.path.exists(file_path):
-                print("yey")
+                
                 os.remove(file_path)
 
-        print(os.listdir(settings.MEDIA_ROOT))
+       
         
         return redirect('list')
     
@@ -156,11 +161,16 @@ def logout_user(request):
 
 @login_required(login_url='login')
 def viewRecord(request,pk):
-
     animal_record = animal.objects.get(id=pk)
+    full_record_number = animal_record.code + animal_record.number
+    cubs = animal.objects.filter(parent=full_record_number)
+    if request.user == animal.objects.get(id=pk).user:
+
+        return render(request,'viewrecord.html',context={'animal_record':animal_record,'cubs':cubs})
+    else:
+        raise Http404
     
     
-    return render(request,'viewrecord.html',context={'animal_record':animal_record})
 
 
 def register_user(request):

@@ -9,6 +9,7 @@ from .urls import *
 class testTable(tables.Table):
     id = tables.Column(verbose_name='ID',linkify=True,visible=True)
     user_id = tables.Column(verbose_name='USER ID',visible=False)
+    parent = tables.Column(verbose_name='PARENT',visible=False)
     code = tables.Column(verbose_name='CODE',linkify=False)                     #column names must match model column names!!
     number = tables.Column(verbose_name='NUMBER',linkify=False)
     date = tables.Column(verbose_name='BIRTH DATE')
