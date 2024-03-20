@@ -79,11 +79,11 @@ add a:
             images/
 ```
 folder
-
+```
 ~python3 manage.py makemigrations 
-
 ~python3 manage.py migrate
-
+```
+Finally,
 ```
 django_projecct/
     myapp/
@@ -96,20 +96,20 @@ should be your end result
 
 Another way without cloning this repository is to 
 start your own django project with :
-
+```
 ~django-admin startproject 'foo'
-
 ~cd /foo
-
 ~python3 manage.py startapp 'foobar'
-
+```
 Then copy and paste the repositorys' 
+```
 /base
 /myapp
 /migrations
 /templates
-
+```
 Then proceed normally to STEP 3
+
 You should be good to go!
 
 
