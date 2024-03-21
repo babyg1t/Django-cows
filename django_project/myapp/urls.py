@@ -14,7 +14,13 @@ urlpatterns = [
     path('delete/<int:pk>',views.delete_record,name='delete'),
     path('login/',views.login_user,name='login'),
     path('bootstrap/',views.bootstrap_list,name='boot'),
-    path('update/<int:pk>',views.update_record,name='update')
+    path('update/<int:pk>',views.update_record,name='update'),
+    path('deceased/<int:pk>',views.deceasedAnimal,name='deceased'),
+    path('sell/<int:pk>',views.sell,name='sell'),
+    path('sold/',views.viewSold,name='viewsold'),
+
+
+
 
    
 
