@@ -36,12 +36,27 @@ class animal(models.Model):
     
    
 
-# class deceased(models.Model):
-#     user = models.ForeignKey(User,on_delete=models.CASCADE)
-#     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
-#     code = models.CharField(max_length=50,null=True)
-#     number = models.CharField(max_length=50,null=True,)
-#     date = models.DateField(null=True)
-#     died = models.DateField(null=True,auto_now)
-#     image = models.ImageField(null=True, default='default.jpg')
-#     pass
+class deceased(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+    parent = models.CharField(null=True,max_length=200)
+    code = models.CharField(max_length=50,null=True)
+    number = models.CharField(max_length=50,null=True,)
+    date = models.DateField(null=True)
+    gender = models.CharField(null=True,max_length=200)
+    removed = models.DateField(null=True,auto_now=True)
+    cause = models.CharField(null=True,max_length=350)
+    image = models.ImageField(null=True, default='default.jpg')
+
+class sold(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+    parent = models.CharField(null=True,max_length=200)
+    code = models.CharField(max_length=50,null=True)
+    number = models.CharField(max_length=50,null=True,)
+    date = models.DateField(null=True)
+    gender = models.CharField(null=True,max_length=200)
+    sold_to = models.CharField(null=True,max_length=200)
+    price = models.CharField(null=True,max_length=50)
+    image = models.ImageField(null=True, default='default.jpg')
+    
