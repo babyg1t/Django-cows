@@ -1,0 +1,30 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<div>
+
+<table class="table table-striped">
+    <thead>
+        <tr class="table-secondary">
+            <th scope="col">Code</th>
+            <th scope="col">Number</th>
+            <th scope="col">Sold to</th>
+            <th scope="col">Price</th>
+            <th scope="col" width="100px;"><i style='font-size:24px' class='fas'>&#xf591;</i></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in records %}
+        <tr class="clickable-row">
+            <td>{{record.code}}</td>
+            <td>{{record.number}}</td>
+            <td>{{record.sold_to}}</td>
+            <td>{{record.price}}</td>
+            <td><a href="{% url 'viewrecord' record.pk %}">Edit</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

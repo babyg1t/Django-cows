@@ -1,0 +1,18 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div class="col-md-6 offset-md-3">   
+    <form class="form-floating" method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-floating mb-3">
+        
+          <input required type="text" class="form-control" id="floatingInputValue1" placeholder="" name="cause">
+          <label for="floatingInputValue1">Cause of death:</label>
+          </div>
+          <br>
+          <button type="Submit" class="btn btn-outline-warning" href="{% url 'list' %}">Remove</button>
+
+    </form>
+</div>
+{% endblock %}

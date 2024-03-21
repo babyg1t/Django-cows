@@ -31,14 +31,17 @@
   </style> 
   </head>
   <body> -->
+    
+    {% block content %}
     <style>
       
-      #cubs{
-        text-decoration: none;
+      
+      #delete{
+        position: absolute;
+        right: 2%;
       }
-     
-    </style>
-    {% block content %}
+      
+      </style>
     <div class="col-md-6 offset-md-2">
     <div class="card" style="width: 55rem; height: auto;">
        
@@ -77,8 +80,11 @@
         
         <div class="card-body">
           <a href="{% url 'update' animal_record.pk %}" class="card-link"><button class="btn btn-outline-primary " >Edit</button></a>
-          <a href="{% url 'delete' animal_record.pk %}" class="card-link"><button class="btn btn-outline-danger " id="button" >Delete</button></a>
-
+          
+          <a href="{% url 'deceased' animal_record.pk %}" class="card-link" id="remove"><button class="btn btn-outline-warning" >Remove</button></a>
+          <a href="{% url 'sell' animal_record.pk %}" class="card-link" id="sold"><button class="btn btn-outline-success" >Sell</button></a>
+          
+          <a href="{% url 'delete' animal_record.pk %}" class="card-link"><button class="btn btn-outline-danger " id="delete" >Delete</button></a>
           
           
         </div>

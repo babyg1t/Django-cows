@@ -1,0 +1,25 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div class="col-md-6 offset-md-3">   
+    <form class="form-floating" method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-floating mb-3">
+        
+          <input required type="text" class="form-control" id="floatingInputValue1" placeholder="" name="code">
+          <label for="floatingInputValue1">Buyer code:</label>
+          </div>
+          <br>
+        <div class="form-floating mb-3">
+
+          <input required type="text" class="form-control" id="floatingInputValue2" placeholder="" name="price">
+          <label for="floatingInputValue2">Price:</label>
+          </div>
+          <br>
+          
+          <button type="Submit" class="btn btn-outline-success" href="{% url 'list' %}">Sell</button>
+
+    </form>
+</div>
+{% endblock %}

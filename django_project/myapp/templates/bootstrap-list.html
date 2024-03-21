@@ -1,28 +1,93 @@
 {% extends 'home.html' %}
 {% block content %}
+<style> 
+  #delete{
+  
+  
+  text-decoration: none;
+  }
+  #delete:link{
+    color: red;
+  }
+  </style>
+  <div class="col-md-6 offset-md-3">  
+      <form method="get" class="d-flex" >
+          <!-- including csrf_token leads to it being passed in, in the page url-->
+          <!-- forms with get method normaly dont require a token -->
+   
+
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
+          <button class="btn btn-primary" href="{% url 'boot' %}" type="submit">Clear</button>
+          
+        </form>
+<form method="post">
+  {% csrf_token %}
+<br>
+</div>
 <div>
-<table class="table table-striped">
+  <table class="table table-striped" style="border: 3px solid snow;">
     <thead>
       <tr class="table-secondary">
+        <th scope="col">Select</th>
+        
         <th scope="col">Code</th>
+        <th scope="col">Number</th>
         <th scope="col">Birth date</th>
         <th scope="col">Gender</th>
-        
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
       {% for record in records %}
       
       <tr class="clickable-row">
-        
-        <a href="{% url 'viewrecord' record.pk %}"><td>{{record.code}}</a></td>
-        <td>{{record.date}}</td>
-        <td>{{record.gender}}</td>
-      </tr>
+        <td width="10%"><input type="checkbox" name="selected" value="{{record.pk}}"/></td>
+        <td width="10%">{{record.code}}</td>
+        <td width="10%">{{record.number}}</td>
+        <td width="20%">{{record.date}}</td>
+        <td width="20%">{{record.gender}}</td>
+        <td width="10%">
+          <a href="{%url 'viewrecord' record.pk %}">
+          <h5>
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+          </svg>
+          </h5>
+        </a>
+      </td>
+      <td width="10%">
+        <a href="{% url 'delete' record.pk %}" id="delete">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+          </svg>
+        </a>
+      </td>
+    </tr>
     
     
-      {% endfor %}
-      </tbody>
-    </table>
-    </div>
-  {% endblock %}
+    
+    {% endfor %}
+    
+    
+  </tbody>
+</table>
+<input type="submit" name="check" value="Sell" class="btn btn-outline-success"/>&nbsp;<input class="btn btn-outline-danger" type="submit" name='Delete' value='delete'/>
+</div>
+</form>
+<form method="get">
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-end">
+    <li class="page-item disabled">
+      <a class="page-link">Previous</a>
+    </li>
+    <li class="page-item"><a class="page-link" href="?page=1" name="page">1</a></li>
+    <li class="page-item"><a class="page-link" href="?page=2" name="page">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
+</form>
+{% endblock %}
