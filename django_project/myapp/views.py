@@ -1,7 +1,7 @@
 from typing import Any
 from django.shortcuts import HttpResponse,render,redirect
 from .forms import SignUpForm
-from .models import animal
+from .models import animal,deceased,sold
 from django.db.models import Q
 from .tables import *
 from base import settings
@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django_tables2 import RequestConfig
 import os
 from django.http import Http404
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -120,13 +121,77 @@ def animal_listing(request):
     return render(request,'list_new.html',context={'table':table})
 
 
+def deceasedAnimal(request,pk):
+     
+    record = animal.objects.get(id=pk)
+    if request.method == 'POST':
+        
+        deceased.objects.create(
+            parent = record.parent,
+            user = record.user,
+            code = record.code,
+            number = record.number,
+            gender = record.gender,
+            date = record.date,
+            cause = request.POST.get('cause'),
+            image = record.image
+        )
+        messages.success(request,'Record added to deceased list')
+        return redirect('list')
+    return render(request,'deceased.html')
 
+def sell(request,pk):
+     
+    record = animal.objects.get(id=pk)
+    if request.method == 'POST':
+        
+        sold.objects.create(
+            parent = record.parent,
+            user = record.user,
+            code = record.code,
+            number = record.number,
+            date = record.date,
+            price = request.POST.get('price'),
+            sold_to = request.POST.get('code'),
+            gender = record.gender,
+            image = record.image
+        )
+        messages.success(request,'Record sold!')
+        return redirect('list')
+    return render(request,'sold.html')
+
+def viewSold(request):
+     records = sold.objects.all()
+     return render(request,'viewSold.html',{'records':records})
 
 def bootstrap_list(request):
-     
-     records = animal.objects.all()
+    list = request.POST.getlist('selected')
+    records = animal.objects.filter(user=request.user)
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    records = animal.objects.filter(user=request.user).filter(
+        Q(code__icontains=q) |
+        Q(date__icontains=q) |
+        Q(gender__icontains=q) |
+        Q(number__icontains=q) 
 
-     return render(request,'bootstrap-list.html',{'records':records})
+
+    )
+    # paginator = Paginator(records,2)
+    # page_number = request.GET.get('page')
+    
+    # records = paginator.get_page(page_number)
+    
+    if request.method == 'POST':
+        if request.POST.get('check') is not None:
+            
+            print(list)
+        elif request.POST.get('delete'):
+            for i in list:
+                record = animal.objects.get(id=i)
+                record.delete()
+            
+
+    return render(request,'bootstrap-list.html',{'records':records})
 
 
 def home(request):
