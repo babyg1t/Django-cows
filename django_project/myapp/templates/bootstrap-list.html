@@ -1,5 +1,7 @@
 {% extends 'home.html' %}
 {% block content %}
+
+
 <style> 
   #delete{
   
@@ -10,16 +12,19 @@
     color: red;
   }
   </style>
-  <div class="col-md-6 offset-md-3">  
+  <div class="col-md-6 offset-md-3"> 
+    
       <form method="get" class="d-flex" >
+        
           <!-- including csrf_token leads to it being passed in, in the page url-->
           <!-- forms with get method normaly dont require a token -->
    
 
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
-          <button class="btn btn-primary" href="{% url 'boot' %}" type="submit">Clear</button>
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" href="?page={{current}}&q=" name="q">
+          <button class="btn btn-primary" href="{% url 'boot' %}" type="submit" value="?page=1">Clear</button>
           
         </form>
+        
 <form method="post">
   {% csrf_token %}
 <br>
@@ -28,7 +33,7 @@
   <table class="table table-striped" style="border: 3px solid snow;">
     <thead>
       <tr class="table-secondary">
-        <th scope="col">Select</th>
+        <th scope="col">Select <input type="checkbox" name="selected" value=""/></th>
         
         <th scope="col">Code</th>
         <th scope="col">Number</th>
@@ -42,7 +47,7 @@
       {% for record in records %}
       
       <tr class="clickable-row">
-        <td width="10%"><input type="checkbox" name="selected" value="{{record.pk}}"/></td>
+        <td width="10%"><input type="checkbox" name="selected" value="{{record.pk}}" onchange="toggleButton();"/></td>
         <td width="10%">{{record.code}}</td>
         <td width="10%">{{record.number}}</td>
         <td width="20%">{{record.date}}</td>
@@ -72,22 +77,44 @@
     
   </tbody>
 </table>
-<input type="submit" name="check" value="Sell" class="btn btn-outline-success"/>&nbsp;<input class="btn btn-outline-danger" type="submit" name='Delete' value='delete'/>
+<input type="submit" name="check" value="Sell" class="btn btn-primary" id="sellbtn"  style="visibility: hidden;"/>&nbsp;<input class="btn btn-danger" id="deletebtn" type="submit" name='Delete' value='delete' style="visibility: hidden;"/>
 </div>
 </form>
 <form method="get">
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-end">
-    <li class="page-item disabled">
-      <a class="page-link">Previous</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="?page=1" name="page">1</a></li>
-    <li class="page-item"><a class="page-link" href="?page=2" name="page">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
+     {% if lastpage > 1 %} 
+      {% if current > 1%}
+      <li class="page-item">
+        <a class="page-link" href="?page={{previous}}">Previous</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="">Previous</a>
+      </li>
+      {% endif %}
+    
+    
+    {% for i in range %}
+    <li class="page-item"><a class="page-link" id = "page{{i}}" href="?page={{i}}" >{{i}}</a></li>
+    <!-- <li class="page-item"><a class="page-link" href="?page=2" >2</a></li>
+    <li class="page-item"><a class="page-link" href="?page=3" >3</a></li> -->
+    
+    {% endfor %}
+    
+      {% if lastpage > current  %} <!-- its interesting that you cant use '<' symbol as it conflicts with html syntax -->
+      <li class="page-item">
+        <a class="page-link" href="?page={{next}}">Next</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="">Next</a>
+      </li>
+      {% endif %}
+    {% endif %}
+    
   </ul>
 </nav>
 </form>
+<!--d flex div works-->
 {% endblock %}
