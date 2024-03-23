@@ -117,7 +117,7 @@ def animal_listing(request):
 
     ))
     
-    RequestConfig(request, paginate={"per_page": 15}).configure(table)
+    RequestConfig(request, paginate={"per_page": 3}).configure(table)
     return render(request,'list_new.html',context={'table':table})
 
 
@@ -166,20 +166,27 @@ def viewSold(request):
 
 def bootstrap_list(request):
     list = request.POST.getlist('selected')
-    records = animal.objects.filter(user=request.user)
+    
+    current_page = int(request.GET.get('page')) if request.GET.get('page') is not None else 1
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     records = animal.objects.filter(user=request.user).filter(
         Q(code__icontains=q) |
         Q(date__icontains=q) |
         Q(gender__icontains=q) |
         Q(number__icontains=q) 
-
-
     )
-    # paginator = Paginator(records,2)
-    # page_number = request.GET.get('page')
+    paginator = Paginator(records,3)
+    print(type(current_page))
+    print(f"current page {current_page}")
     
-    # records = paginator.get_page(page_number)
+    records = paginator.get_page(current_page)
+    print(f'records = {records}')
+    num_of_pages = paginator.num_pages
+    print(type(num_of_pages))
+    print(f'range of numofpages {range(num_of_pages)}')
+    # query all records
+    #if request = post then filter q
+    #then paginate records
     
     if request.method == 'POST':
         if request.POST.get('check') is not None:
@@ -190,8 +197,13 @@ def bootstrap_list(request):
                 record = animal.objects.get(id=i)
                 record.delete()
             
+    previous = current_page - 1
+    next = current_page + 1
 
-    return render(request,'bootstrap-list.html',{'records':records})
+    context = {'records':records,'range':range(1,num_of_pages+1),
+               'previous':previous,'next':next,'current':current_page,               
+               'lastpage':num_of_pages}
+    return render(request,'bootstrap-list.html',context)
 
 
 def home(request):
