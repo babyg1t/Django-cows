@@ -33,26 +33,26 @@
   <table class="table table-striped" style="border: 3px solid snow;">
     <thead>
       <tr class="table-secondary">
-        <th scope="col">Select <input type="checkbox" name="selected" value=""/></th>
+        <th scope="col" width="10%">Select <input type="checkbox" name="selected" value=""/></th>
         
-        <th scope="col">Code</th>
-        <th scope="col">Number</th>
-        <th scope="col">Birth date</th>
-        <th scope="col">Gender</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Delete</th>
+        <th scope="col" width="15%">Code</th>
+        <th scope="col" width="15%">Number</th>
+        <th scope="col" width="25%">Birth date</th>
+        <th scope="col" width="25%">Gender</th>
+        <th scope="col" width="10%">Edit</th>
+        <th scope="col" width="10%">Delete</th>
       </tr>
     </thead>
     <tbody>
       {% for record in records %}
       
       <tr class="clickable-row">
-        <td width="10%"><input type="checkbox" name="selected" value="{{record.pk}}" onchange="toggleButton();"/></td>
-        <td width="10%">{{record.code}}</td>
-        <td width="10%">{{record.number}}</td>
-        <td width="20%">{{record.date}}</td>
-        <td width="20%">{{record.gender}}</td>
-        <td width="10%">
+        <td ><input type="checkbox" name="selected" value="{{record.pk}}" onchange="toggleButton();"/></td>
+        <td >{{record.code}}</td>
+        <td >{{record.number}}</td>
+        <td >{{record.date}}</td>
+        <td >{{record.gender}}</td>
+        <td >
           <a href="{%url 'viewrecord' record.pk %}">
           <h5>
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
@@ -80,7 +80,7 @@
 <input type="submit" name="check" value="Sell" class="btn btn-primary" id="sellbtn"  style="visibility: hidden;"/>&nbsp;<input class="btn btn-danger" id="deletebtn" type="submit" name='Delete' value='delete' style="visibility: hidden;"/>
 </div>
 </form>
-<form method="get">
+<!-- <form method="get"> -->
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-end">
      {% if lastpage > 1 %} 
@@ -115,6 +115,6 @@
     
   </ul>
 </nav>
-</form>
+<!-- </form> -->
 <!--d flex div works-->
 {% endblock %}
